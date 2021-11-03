@@ -6,7 +6,6 @@ import callPage from 'pages/02_callPage';
 import endPage from 'pages/03_endPage';
 import Footer from 'pages/constants/Footer';
 import errorPage from 'pages/04_errorPage';
-
 class Routes extends React.Component{
     render(){
         return(
