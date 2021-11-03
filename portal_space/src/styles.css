@@ -1,0 +1,26 @@
+/* 나눔고딕 한글 ( regular, bold, extra-bold 사용 가능) */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+:root{
+    font-family : 'Nanum Gothic' , sans-serif;
+}
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    padding: 20px 0;
+}
+
+video {
+    width: 40vw;
+    height: 30vw;
+    margin: 2rem;
+    background: #2c3e50;
+}
+
+.videos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
