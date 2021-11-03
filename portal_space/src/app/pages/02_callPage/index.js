@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from 'utils/appContext';
 import './styles.css';
 
-function callPage() {
+function CallPage() {
     return (
         <div className="body-wrapper">
             <div className="inner-wrapper">
@@ -16,4 +17,4 @@ function callPage() {
     );
 }
 
-export default callPage;
+export default CallPage;

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from 'utils/appContext';
 import './styles.css';
 
-function endPage( { history }) {
+function EndPage( { history }) {
     return (
         <div className="body-wrapper">
             <div className="inner-wrapper">
@@ -17,4 +18,4 @@ function endPage( { history }) {
     );
 }
 
-export default endPage;
+export default EndPage;

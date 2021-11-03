@@ -1,4 +1,6 @@
-const servers = {
+import React from "react";
+
+const serverSetting = {
     iceServers: [
         {
             urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
@@ -7,4 +9,4 @@ const servers = {
     iceCandidatePoolSize: 10,
 };
 
-export const servers;
+export default serverSetting;
