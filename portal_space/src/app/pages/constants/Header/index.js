@@ -4,9 +4,9 @@ import './styles.css';
 function Header() {
     return (
         <header>
-            <p1>
+            <p>
             포털 스페이스
-            </p1>
+            </p>
         </header>
     );
 }
