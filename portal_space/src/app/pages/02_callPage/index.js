@@ -2,16 +2,31 @@ import React, { useContext } from 'react';
 import AppContext from 'utils/appContext';
 import './styles.css';
 
-function CallPage() {
+function CallPage({ history }) {
+    const myContext = useContext(AppContext);
+    const startWebcam = async() =>{
+        const newStream = await navigator.mediaDevices
+            .getUserMedia({ video: true, audio: true});
+    
+        myContext.setLocalStream(newStream);
+    }
+
     return (
         <div className="body-wrapper">
-            <div className="inner-wrapper">
-                <h1>
-                    영상통화 시작하면 해당 페이지 렌더링 해줘야함
-                </h1>
-                <p>
-                    Start fun Video Chat with your friend !
-                </p>
+            <div className="video2">
+                <div id="myVideo">    
+                    <video id="sVideo" autoPlay playsInline></video>
+                </div>
+                <div>
+                    <div className="lButton"><button>b1</button></div>
+                    <div className="lButton"><button>b2</button></div>
+                </div>
+                <div id="yourVideo">
+                    <video id="lVideo" autoPlay playsInline></video>
+                </div>
+            </div>
+            <div>
+                    <button onClick={ () => history.push('/thanks')}> end call </button>
             </div>
         </div>
     );
