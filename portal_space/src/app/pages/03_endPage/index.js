@@ -6,13 +6,14 @@ function EndPage( { history }) {
     return (
         <div className="body-wrapper">
             <div className="inner-wrapper">
-                <h1>
-                    영상통화 끝나면 나오는 페이지
-                </h1>
-                <p>
-                    고우 투 메인 버튼 추가 필요
-                </p>
-                <button onClick={ () => history.push('/')}> 메인으로 가기 </button>
+                <div className="endCall">
+                    <h1>
+                        통화가 종료되었습니다.
+                    </h1>
+                </div>
+                <div>
+                    <button onClick={ () => history.push('/')}> 메인으로 가기 </button>
+                </div>
             </div>
         </div>
     );
