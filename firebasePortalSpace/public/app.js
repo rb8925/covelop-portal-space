@@ -1,16 +1,31 @@
-import { configuration } from './signalling.js';
-import { copyToClipboard } from './utils.js';
-
-
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
-let isCreatedMyId = false; // <- ROOM ID 생성 여부 저장
+function copyToClipboard(text) {
+  var t = document.createElement("textarea");
+  document.body.appendChild(t);
+  t.value = text;
+  t.select();
+  document.execCommand('copy');
+  document.body.removeChild(t);
+}
+
+const configuration = {
+  iceServers: [
+    {
+      urls: [
+        'stun:stun1.l.google.com:19302',
+        'stun:stun2.l.google.com:19302',
+      ],
+    },
+  ],
+  iceCandidatePoolSize: 10,
+};
+
 let peerConnection = null;
 let localStream = null;
 let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
-
 
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
@@ -21,8 +36,8 @@ function init() {
 }
 
 async function createRoom() {
-  //document.querySelector('#createBtn').disabled = true;
-  //document.querySelector('#joinBtn').disabled = true;
+  document.querySelector('#createBtn').disabled = true;
+  document.querySelector('#joinBtn').disabled = true;
   const db = firebase.firestore();
   const roomRef = await db.collection('rooms').doc();
 
@@ -62,9 +77,9 @@ async function createRoom() {
   await roomRef.set(roomWithOffer);
   roomId = roomRef.id;
   console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
-  copyToClipboard(roomRef.id)
-  document.querySelector(
-    '#currentRoom').innerText = `Current room is ${roomRef.id} - Send this to your friend!`;
+   copyToClipboard(roomRef.id)
+   document.querySelector(
+       '#currentRoom').innerText = `Current room is ${roomRef.id} - Send this to your friend!`;
   // Code for creating a room above
 
   peerConnection.addEventListener('track', event => {
@@ -100,17 +115,17 @@ async function createRoom() {
 }
 
 function joinRoom() {
-  // document.querySelector('#createBtn').disabled = true;
-  // document.querySelector('#joinBtn').disabled = true;
+  document.querySelector('#createBtn').disabled = true;
+  document.querySelector('#joinBtn').disabled = true;
 
   document.querySelector('#confirmJoinBtn').
-    addEventListener('click', async () => {
-      roomId = document.querySelector('#room-id').value;
-      console.log('Join room: ', roomId);
-      // document.querySelector(
-      //     '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
-      await joinRoomById(roomId);
-    }, { once: true });
+      addEventListener('click', async () => {
+        roomId = document.querySelector('#room-id').value;
+        console.log('Join room: ', roomId);
+        // document.querySelector(
+        //     '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
+        await joinRoomById(roomId);
+      }, {once: true});
   roomDialog.open();
 }
 
@@ -181,7 +196,7 @@ async function joinRoomById(roomId) {
 
 async function openUserMedia(e) {
   const stream = await navigator.mediaDevices.getUserMedia(
-    { video: true, audio: true });
+      {video: true, audio: true});
   document.querySelector('#localVideo').srcObject = stream;
   localStream = stream;
   remoteStream = new MediaStream();
@@ -237,7 +252,7 @@ async function hangUp(e) {
 function registerPeerConnectionListeners() {
   peerConnection.addEventListener('icegatheringstatechange', () => {
     console.log(
-      `ICE gathering state changed: ${peerConnection.iceGatheringState}`);
+        `ICE gathering state changed: ${peerConnection.iceGatheringState}`);
   });
 
   peerConnection.addEventListener('connectionstatechange', () => {
@@ -250,7 +265,7 @@ function registerPeerConnectionListeners() {
 
   peerConnection.addEventListener('iceconnectionstatechange ', () => {
     console.log(
-      `ICE connection state change: ${peerConnection.iceConnectionState}`);
+        `ICE connection state change: ${peerConnection.iceConnectionState}`);
   });
 }
 
