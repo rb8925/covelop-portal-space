@@ -1,6 +1,5 @@
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
-
 function copyToClipboard(text) {
   var t = document.createElement("textarea");
   document.body.appendChild(t);
@@ -78,9 +77,9 @@ async function createRoom() {
   await roomRef.set(roomWithOffer);
   roomId = roomRef.id;
   console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
-  copyToClipboard(roomRef.id)
-  // document.querySelector(
-  //     '#currentRoom').innerText = `Current room is ${roomRef.id} - You are the caller!`;
+   copyToClipboard(roomRef.id)
+   document.querySelector(
+       '#currentRoom').innerText = `Current room is ${roomRef.id} - Send this to your friend!`;
   // Code for creating a room above
 
   peerConnection.addEventListener('track', event => {
