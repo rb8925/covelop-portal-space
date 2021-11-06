@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to FirebaseRTC</title>
+    <title>Portal Space</title>
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -15,34 +15,63 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="main.css?after">
 </head>
 <body>
-<h1>Welcome to FirebaseRTC!</h1>
-<div id="buttons">
-    <button class="mdc-button mdc-button--raised" id="cameraBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
-        <span class="mdc-button__label">Open camera & microphone</span>
-    </button>
-    <button class="mdc-button mdc-button--raised" disabled id="createBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
-        <span class="mdc-button__label">Create room</span>
-    </button>
-    <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">group</i>
-        <span class="mdc-button__label">Join room</span>
-    </button>
-    <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
-        <span class="mdc-button__label">Hangup</span>
-    </button>
-</div>
-<div>
-    <span id="currentRoom"></span>
-</div>
-<div id="videos">
-    <video id="localVideo" muted autoplay playsinline></video>
-    <video id="remoteVideo" autoplay playsinline></video>
+<h1>Launch your own Portal Space!</h1>
+<div id="screen">
+    <div>
+        <span id="currentRoom"></span>
+    </div>
+    <div id="upper">
+        <div id="vidcon">
+            <div id="videos2">
+                <video id="localVideo" muted autoplay playsinline></video>
+            </div>
+        </div>
+        <div id="button2">
+            <div id="btn2">
+                <button class="mdc-button mdc-button--raised" id="emptyA">
+                    <span class="mdc-button__label">TRAVEL</span>
+                </button>
+            </div>
+            <div id="btn2">
+                <button class="mdc-button mdc-button--raised" id="emptyB">
+                    <span class="mdc-button__label">INVITE</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="videos">
+        <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+
+    <div id="buttons">
+        <div id="btn">
+            <button class="mdc-button mdc-button--raised" id="cameraBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
+                <!-- <span class="mdc-button__label">START VIDEO</span> -->
+            </button>
+        </div>
+        <div id="btn">  
+            <button class="mdc-button mdc-button--raised" disabled id="createBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
+                <!-- <span class="mdc-button__label">CREATE ROOM</span> -->
+            </button>
+        </div>
+        <div id="btn">  
+            <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">group</i>
+                <!-- <span class="mdc-button__label">JOIN ROOM</span> -->
+            </button>
+        </div>
+        <div id="btn"> 
+            <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
+                <!-- <span class="mdc-button__label">END CALL</span> -->
+            </button>
+        </div>
+    </div>
 </div>
 <div class="mdc-dialog"
      id="room-dialog"
