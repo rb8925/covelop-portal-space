@@ -98,7 +98,7 @@ div#videos2 > video {
 }
 
 div#screen {
-  background-color: gray;
+  background-color: rgba(128, 128, 128, 0.6);
   border-radius: 1rem;
   padding: 1rem;
 }
