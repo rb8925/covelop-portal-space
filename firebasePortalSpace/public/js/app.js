@@ -1,32 +1,16 @@
+// import {loadBodyPix, perform} from './videoEffect';
+import { configuration } from './signalling.js';
+import { copyToClipboard } from './utils.js';
+
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
-
-function copyToClipboard(text) {
-  var t = document.createElement("textarea");
-  document.body.appendChild(t);
-  t.value = text;
-  t.select();
-  document.execCommand('copy');
-  document.body.removeChild(t);
-}
-
-const configuration = {
-  iceServers: [
-    {
-      urls: [
-        'stun:stun1.l.google.com:19302',
-        'stun:stun2.l.google.com:19302',
-      ],
-    },
-  ],
-  iceCandidatePoolSize: 10,
-};
-
+let isCreatedMyId = false; // <- ROOM ID 생성 여부 저장
 let peerConnection = null;
 let localStream = null;
 let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
+
 
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
@@ -37,8 +21,8 @@ function init() {
 }
 
 async function createRoom() {
-  document.querySelector('#createBtn').disabled = true;
-  document.querySelector('#joinBtn').disabled = true;
+  //document.querySelector('#createBtn').disabled = true;
+  //document.querySelector('#joinBtn').disabled = true;
   const db = firebase.firestore();
   const roomRef = await db.collection('rooms').doc();
 
@@ -116,8 +100,8 @@ async function createRoom() {
 }
 
 function joinRoom() {
-  document.querySelector('#createBtn').disabled = true;
-  document.querySelector('#joinBtn').disabled = true;
+  // document.querySelector('#createBtn').disabled = true;
+  // document.querySelector('#joinBtn').disabled = true;
 
   document.querySelector('#confirmJoinBtn').
       addEventListener('click', async () => {

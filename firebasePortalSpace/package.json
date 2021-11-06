@@ -1,5 +1,10 @@
 {
+  "name" : "portal-space",
+  "description": "fun video call with your friends! Warp out ! ",
+  "version" : "1.0.0",
+  "type" : "module",
   "dependencies": {
     "firebase-tools": "9.21.0"
   }
 }
+
