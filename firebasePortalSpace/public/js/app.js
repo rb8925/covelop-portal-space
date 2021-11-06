@@ -4,7 +4,7 @@ import { copyToClipboard } from './utils.js';
 
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
-let isCreatedMyId = false; // <- ROOM ID 생성 여부 저장
+
 let peerConnection = null;
 let localStream = null;
 let remoteStream = null;

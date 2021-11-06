@@ -16,9 +16,6 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0"></script>
-
     <link rel="stylesheet" type="text/css" href="./style/main.css">
     <style>
         body {
@@ -28,23 +25,15 @@
 </head>
 
 <body>
-
-<h1 style="color:wheat">Launch your own Portal Space!</h1>
-<div id="screen">
-    <div>
-        <span id="currentRoom" style="color: white;"></span>
-    </div>
-    <div id="upper">
-        <div id="vidcon">
-            <div id="videos2">
-                <video id="localVideo" muted autoplay playsinline></video>
-            </div>
+    <h1 style="color:wheat">Launch your own Portal Space!</h1>
+    <div id="screen">
+        <div>
+            <span id="currentRoom" style="color: white;"></span>
         </div>
         <div id="upper">
             <div id="vidcon">
                 <div id="videos2">
                     <video id="localVideo" muted autoplay playsinline></video>
-                    <canvas id="localVideo-canvas" hidden></canvas>
                 </div>
             </div>
             <div id="button2">
@@ -120,8 +109,6 @@
         <div class="mdc-dialog__scrim"></div>
     </div>
     <script type="module" src="./js/app.js"></script>
-    <!-- <script src="./js/videoEffect.js"></script> -->
-    <!-- <script src="./js/signalling.js"></script> -->
 </body>
 
 </html>
