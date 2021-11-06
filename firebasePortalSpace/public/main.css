@@ -104,12 +104,14 @@ div#screen {
 }
 div#btn {
   display: flex;
+  min-width: 1;
 }
 div#buttons {
   display: flex;
   flex: 1;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 1em;
 }
 div#upper {
   display: flex;
@@ -122,16 +124,36 @@ div#button2 {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-bottom: 0.1em;
+  margin-bottom: 0.2em;
   padding-left: 0.2em;
 }
 div#vidcon {
   width: 40%;
   height: 40%;
 }
+div#btn1 {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  background-color: #6200ee;
+  border-radius: 0.5em;
+  margin-bottom: 0.2em;
+  align-items: center;
+  margin-left: 0.2em;
+}
 div#btn2 {
   display: flex;
   flex: 1;
   justify-content: center;
-  flex-grow: 1;
+  background-color: #6200ee;
+  border-radius: 0.5em;
+  margin-top: 0.2em;
+  align-items: center;
+  margin-left: 0.2em;
+}
+div#BtnText {
+  color: white;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 2vw;
 }
