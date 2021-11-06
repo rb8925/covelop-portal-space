@@ -157,3 +157,8 @@ div#BtnText {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 2vw;
 }
+
+#myCanvas{
+  width: 250px;
+  height: 155px;
+}

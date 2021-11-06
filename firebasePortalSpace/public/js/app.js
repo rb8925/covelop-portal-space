@@ -11,8 +11,9 @@ let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
 
-const videoElement = document.getElementById('video');
-const canvas = document.getElementById('canvas');
+const originMyVideo = document.getElementById('localVideo');
+const videoElement = document.getElementById('myConvertVideo');
+const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
 
@@ -203,7 +204,7 @@ async function openUserMedia(e) {
 
 const croma = document.getElementById('chromakey');
 croma.addEventListener('click', e => {
-  videoElement.hidden = true;
+  originMyVideo.hidden = true;
   canvas.hidden = false;
   loadBodyPix();
 
@@ -219,10 +220,10 @@ async function loadBodyPix() {
   const net = await bodyPix.load(options);
 
   while (1) {
-    console.log("ok Tensorflow start!\n");
+    // console.log("ok Tensorflow start!\n");
 
-    const segmentation = await net.segmentPerson(video);
-    console.log(segmentation);
+    const segmentation = await net.segmentPerson(myConvertVideo);
+    // console.log(segmentation);
     const foregroundColor = { r: 0, g : 0, b : 0, a:0};
     const backgroundColor = { r: 0, g : 0, b : 0, a:255};
     const backgroundDarkeningMask = bodyPix.toMask(
@@ -233,7 +234,7 @@ async function loadBodyPix() {
     const edgeBlurAmount = 2;
     const flipHorizontal = false;
     bodyPix.drawMask(
-      canvas, videoElement, backgroundDarkeningMask, opacity, maskBlurAmount,
+      myCanvas, myConvertVideo, backgroundDarkeningMask, opacity, maskBlurAmount,
       flipHorizontal
     );
   }
