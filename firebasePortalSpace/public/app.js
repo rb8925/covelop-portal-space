@@ -1,5 +1,15 @@
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
+
+function copyToClipboard(text) {
+  var t = document.createElement("textarea");
+  document.body.appendChild(t);
+  t.value = text;
+  t.select();
+  document.execCommand('copy');
+  document.body.removeChild(t);
+}
+
 const configuration = {
   iceServers: [
     {
@@ -68,8 +78,9 @@ async function createRoom() {
   await roomRef.set(roomWithOffer);
   roomId = roomRef.id;
   console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
-  document.querySelector(
-      '#currentRoom').innerText = `Current room is ${roomRef.id} - You are the caller!`;
+  copyToClipboard(roomRef.id)
+  // document.querySelector(
+  //     '#currentRoom').innerText = `Current room is ${roomRef.id} - You are the caller!`;
   // Code for creating a room above
 
   peerConnection.addEventListener('track', event => {
@@ -112,8 +123,8 @@ function joinRoom() {
       addEventListener('click', async () => {
         roomId = document.querySelector('#room-id').value;
         console.log('Join room: ', roomId);
-        document.querySelector(
-            '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
+        // document.querySelector(
+        //     '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
         await joinRoomById(roomId);
       }, {once: true});
   roomDialog.open();
