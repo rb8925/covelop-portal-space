@@ -220,10 +220,7 @@ async function loadBodyPix() {
   const net = await bodyPix.load(options);
 
   while (1) {
-    // console.log("ok Tensorflow start!\n");
-
     const segmentation = await net.segmentPerson(myConvertVideo);
-    // console.log(segmentation);
     const foregroundColor = { r: 0, g : 0, b : 0, a:0};
     const backgroundColor = { r: 0, g : 0, b : 0, a:255};
     const backgroundDarkeningMask = bodyPix.toMask(
