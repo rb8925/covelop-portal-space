@@ -11,6 +11,11 @@ let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
 
+const originMyVideo = document.getElementById('localVideo');
+const videoElement = document.getElementById('myConvertVideo');
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
 
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
@@ -184,6 +189,9 @@ async function openUserMedia(e) {
     { video: true, audio: true });
   document.querySelector('#localVideo').srcObject = stream;
   localStream = stream;
+  videoElement.srcObject = stream;
+  videoElement.play();
+  
   remoteStream = new MediaStream();
   document.querySelector('#remoteVideo').srcObject = remoteStream;
 
@@ -192,6 +200,41 @@ async function openUserMedia(e) {
   document.querySelector('#joinBtn').disabled = false;
   document.querySelector('#createBtn').disabled = false;
   document.querySelector('#hangupBtn').disabled = false;
+}
+
+const croma = document.getElementById('chromakey');
+croma.addEventListener('click', e => {
+  originMyVideo.hidden = true;
+  canvas.hidden = false;
+  loadBodyPix();
+
+});
+async function loadBodyPix() {
+  canvas.height = videoElement.videoheight;
+  canvas.width = videoElement.videowidth;
+  const options = {
+    multiplier: 0.75,
+    stride: 32,
+    quantBytes: 4
+  }
+  const net = await bodyPix.load(options);
+
+  while (1) {
+    const segmentation = await net.segmentPerson(myConvertVideo);
+    const foregroundColor = { r: 0, g : 0, b : 0, a:0};
+    const backgroundColor = { r: 0, g : 0, b : 0, a:255};
+    const backgroundDarkeningMask = bodyPix.toMask(
+      segmentation,foregroundColor,backgroundColor);
+    const opacity = 1.0;
+    const maskBlurAmount = 3;
+    const backgroundBlurAmount = 6;
+    const edgeBlurAmount = 2;
+    const flipHorizontal = false;
+    bodyPix.drawMask(
+      myCanvas, myConvertVideo, backgroundDarkeningMask, opacity, maskBlurAmount,
+      flipHorizontal
+    );
+  }
 }
 
 async function hangUp(e) {
