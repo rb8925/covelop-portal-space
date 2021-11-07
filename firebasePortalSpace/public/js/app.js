@@ -15,7 +15,10 @@ const originMyVideo = document.getElementById('localVideo');
 const videoElement = document.getElementById('myConvertVideo');
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
-
+const originMyVideo2 = document.getElementById('remoteVideo');
+const videoElement2 = document.getElementById('myConvertVideo2');
+const canvas2 = document.getElementById('myCanvas2');
+const ctx2 = canvas2.getContext('2d');
 
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
@@ -152,6 +155,10 @@ async function joinRoomById(roomId) {
         remoteStream.addTrack(track);
       });
     });
+    
+    //덕규추가
+    
+    ///여기까지
 
     // Code for creating SDP answer below
     const offer = roomSnapshot.data().offer;
@@ -193,8 +200,10 @@ async function openUserMedia(e) {
   videoElement.play();
   
   remoteStream = new MediaStream();
-  document.querySelector('#remoteVideo').srcObject = remoteStream;
 
+  document.querySelector('#remoteVideo').srcObject = remoteStream;
+  videoElement2.srcObject = remoteStream;
+  videoElement2.play();
   console.log('Stream:', document.querySelector('#localVideo').srcObject);
   document.querySelector('#cameraBtn').disabled = true;
   document.querySelector('#joinBtn').disabled = false;
@@ -207,6 +216,14 @@ croma.addEventListener('click', e => {
   originMyVideo.hidden = true;
   canvas.hidden = false;
   loadBodyPix();
+
+});
+
+const croma2 = document.getElementById('chromakey2');
+croma2.addEventListener('click', e => {
+  originMyVideo2.hidden = true;
+  canvas2.hidden = false;
+  loadBodyPix2();
 
 });
 async function loadBodyPix() {
@@ -236,6 +253,36 @@ async function loadBodyPix() {
     );
   }
 }
+
+
+async function loadBodyPix2() {
+  canvas2.height = videoElement2.videoheight;
+  canvas2.width = videoElement2.videowidth;
+  const options = {
+    multiplier: 0.75,
+    stride: 32,
+    quantBytes: 4
+  }
+  const net = await bodyPix.load(options);
+
+  while (1) {
+    const segmentation = await net.segmentPerson(myConvertVideo2);
+    const foregroundColor = { r: 0, g : 0, b : 0, a:0};
+    const backgroundColor = { r: 0, g : 0, b : 0, a:255};
+    const backgroundDarkeningMask = bodyPix.toMask(
+      segmentation,foregroundColor,backgroundColor);
+    const opacity = 1.0;
+    const maskBlurAmount = 3;
+    const backgroundBlurAmount = 6;
+    const edgeBlurAmount = 2;
+    const flipHorizontal = false;
+    bodyPix.drawMask(
+      myCanvas2, myConvertVideo2, backgroundDarkeningMask, opacity, maskBlurAmount,
+      flipHorizontal
+    );
+  }
+}
+
 
 async function hangUp(e) {
   const tracks = document.querySelector('#localVideo').srcObject.getTracks();

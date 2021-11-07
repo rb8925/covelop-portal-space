@@ -68,10 +68,13 @@
         </div>
         <div id="videos">
             <video id="remoteVideo" autoplay playsinline></video>
-            
+            <canvas hidden id = "myCanvas2" ></canvas>
+
         </div>
         
         <video hidden id="myConvertVideo" width = "650" height = "450" muted autoplay playsinline></video> 
+        <video hidden id="myConvertVideo2" width = "650" height = "450" muted autoplay playsinline></video> 
+
         <div id="buttons">
             <div id="btn">
                 <button id="cameraBtn" style="border-radius: 1em">
@@ -82,6 +85,12 @@
             <div id="btn">
                 <button id="chromakey" style="border-radius: 1em">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">key</i>
+                    <!-- <span class="mdc-button__label">JOIN ROOM</span> -->
+                </button>
+            </div>
+            <div id="btn">
+                <button id="chromakey2" style="border-radius: 1em">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">key2</i>
                     <!-- <span class="mdc-button__label">JOIN ROOM</span> -->
                 </button>
             </div>
