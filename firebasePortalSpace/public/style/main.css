@@ -86,15 +86,13 @@ button {
 div#videos > video {
   background: black;
   /*display: flex;*/
-  width: 360px;
-  height: 330px;
+  width: 87vw;
   margin: 0.1em;
 }
 
 div#videos2 > video {
   background: black;
-  width: 205px;
-  height: 155px;
+  width: 40vw;
 }
 
 div#screen {
@@ -155,6 +153,9 @@ div#BtnText {
 }
 
 #myCanvas {
-  width: 250px;
-  height: 155px;
+  width: 40vw;
+}
+
+#myCanvas2 {
+  width: 87vw;
 }
