@@ -15,6 +15,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"></script>
+    <script async src="https://docs.opencv.org/3.4/opencv.js"></script>
+<!--script async src="./opencv.js"></script-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
@@ -81,6 +83,10 @@
                     <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
                     <!-- <span class="mdc-button__label">START VIDEO</span> -->
                 </button>
+            </div>
+            <div id="btn">
+                <img id="imageSrc" hidden="true" alt="No Image" />
+                <div class="caption"><input type="file" id="fileInput" name="file" /></div>
             </div>
             <div id="btn">
                 <button id="chromakey" style="border-radius: 1em">

@@ -19,6 +19,14 @@ const originMyVideo2 = document.getElementById('remoteVideo');
 const videoElement2 = document.getElementById('myConvertVideo2');
 const canvas2 = document.getElementById('myCanvas2');
 const ctx2 = canvas2.getContext('2d');
+let imgElement = document.getElementById('imageSrc');
+let inputElement = document.getElementById('fileInput');
+inputElement.addEventListener('change', (e) => {
+  imgElement.src = URL.createObjectURL(e.target.files[0]);
+}, false);
+
+
+
 
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
@@ -235,7 +243,7 @@ async function loadBodyPix() {
     quantBytes: 4
   }
   const net = await bodyPix.load(options);
-
+  let back = cv.imread(imgElement);
   while (1) {
     const segmentation = await net.segmentPerson(myConvertVideo);
     const foregroundColor = { r: 0, g : 0, b : 0, a:0};
@@ -247,10 +255,29 @@ async function loadBodyPix() {
     const backgroundBlurAmount = 6;
     const edgeBlurAmount = 2;
     const flipHorizontal = false;
-    bodyPix.drawMask(
+    let cap = new cv.VideoCapture('myConvertVideo');
+    let src = new cv.Mat(videoElement.height, videoElement.width,cv.CV_8UC4);
+    let dst = new cv.Mat(videoElement.height, videoElement.width,cv.CV_8UC4);
+    cap.read(src);
+    src.copyTo(dst);
+    let mask = cv.matFromArray(src.rows,src.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
+    
+    for(let i=0;i<src.rows;i++){
+      for(let j=0;j<src.cols;j++){
+        if(mask.ucharPtr(i,j)[3]==255){
+          dst.ucharPtr(i,j)[0]=back.ucharPtr(i,j)[0];
+          dst.ucharPtr(i,j)[1]=back.ucharPtr(i,j)[1];
+          dst.ucharPtr(i,j)[2]=back.ucharPtr(i,j)[2];
+          dst.ucharPtr(i,j)[3]=back.ucharPtr(i,j)[3];
+        }
+      }
+    }
+
+    cv.imshow("myCanvas",dst);
+    /*bodyPix.drawMask(
       myCanvas, myConvertVideo, backgroundDarkeningMask, opacity, maskBlurAmount,
       flipHorizontal
-    );
+    );*/
   }
 }
 
@@ -264,7 +291,8 @@ async function loadBodyPix2() {
     quantBytes: 4
   }
   const net = await bodyPix.load(options);
-
+  let back = cv.imread(imgElement);
+  
   while (1) {
     const segmentation = await net.segmentPerson(myConvertVideo2);
     const foregroundColor = { r: 0, g : 0, b : 0, a:0};
@@ -276,10 +304,30 @@ async function loadBodyPix2() {
     const backgroundBlurAmount = 6;
     const edgeBlurAmount = 2;
     const flipHorizontal = false;
-    bodyPix.drawMask(
+
+    let cap = new cv.VideoCapture('myConvertVideo2');
+    let src = new cv.Mat(videoElement.height, videoElement.width,cv.CV_8UC4);
+    let dst = new cv.Mat(videoElement.height, videoElement.width,cv.CV_8UC4);
+    cap.read(src);
+    src.copyTo(dst);
+    let mask = cv.matFromArray(src.rows,src.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
+    cv.resize(back,back,new cv.Size(src.rows,src.cols),0,0,cv.INTER_LINEAR);
+    for(let i=0;i<src.rows;i++){
+      for(let j=0;j<src.cols;j++){
+        if(mask.ucharPtr(i,j)[3]==255){
+          dst.ucharPtr(i,j)[0]=back.ucharPtr(i,j)[0];
+          dst.ucharPtr(i,j)[1]=back.ucharPtr(i,j)[1];
+          dst.ucharPtr(i,j)[2]=back.ucharPtr(i,j)[2];
+          dst.ucharPtr(i,j)[3]=back.ucharPtr(i,j)[3];
+        }
+      }
+    }
+
+    cv.imshow("myCanvas2",dst);
+    /*bodyPix.drawMask(
       myCanvas2, myConvertVideo2, backgroundDarkeningMask, opacity, maskBlurAmount,
       flipHorizontal
-    );
+    );*/
   }
 }
 
