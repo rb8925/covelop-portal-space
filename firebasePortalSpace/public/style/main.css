@@ -85,14 +85,15 @@ button {
 */
 div#videos > video {
   background: black;
-  /*display: flex;*/
-  width: 87vw;
-  margin: 0.1em;
+  display: flex;
+  width: 100%;
+  border-radius: 0.5em;
 }
 
 div#videos2 > video {
   background: black;
-  width: 40vw;
+  width: 50vw;
+  border-radius: 0.5em;
 }
 
 div#screen {
@@ -117,10 +118,10 @@ div#upper {
 }
 div#button2 {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.4em;
   padding-left: 0.2em;
-  flex-grow: 1;
 }
 div#vidcon {
   display: flex;
@@ -158,4 +159,10 @@ div#BtnText {
 
 #myCanvas2 {
   width: 87vw;
+}
+div#b_but {
+  margin-top: 1em;
+  flex-direction: row;
+  display: flex;
+  flex: 1;
 }
