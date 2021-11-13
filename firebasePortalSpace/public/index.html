@@ -27,7 +27,7 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="./style/main.css">
+    <link rel="stylesheet" type="text/css" href="./style/main.css?after">
     <style>
         body {
             background-image: url('https://sm.mashable.com/t/mashable_in/photo/default/nasa-galaxy_9pu4.1248.jpg');
@@ -84,10 +84,7 @@
                     <!-- <span class="mdc-button__label">START VIDEO</span> -->
                 </button>
             </div>
-            <div id="btn">
-                <img id="imageSrc" hidden="true" alt="No Image" />
-                <div class="caption"><input type="file" id="fileInput" name="file" /></div>
-            </div>
+            
             <div id="btn">
                 <button id="chromakey" style="border-radius: 1em">
                     <i class="material-icons mdc-button__icon" aria-hidden="true">key</i>
@@ -118,6 +115,10 @@
                     <!-- <span class="mdc-button__label">END CALL</span> -->
                 </button>
             </div>
+        </div>
+        <img id="imageSrc" hidden="true" alt="No Image" />
+        <div class="caption">
+            <input type="file" id="fileInput" name="file" />
         </div>
     </div>
     <div class="mdc-dialog" id="room-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
