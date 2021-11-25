@@ -240,8 +240,8 @@ async function loadBodyPix() {
   canvas.width = videoElement.videowidth;
   const options = {
     multiplier: 0.75,
-    stride: 32,
-    quantBytes: 4
+    stride: 16,
+    quantBytes: 2
   }
   const net = await bodyPix.load(options);
   let back = cv.imread(imgElement);
@@ -262,8 +262,9 @@ async function loadBodyPix() {
     cap.read(src);
     src.copyTo(dst);
     let mask = cv.matFromArray(src.rows,src.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
-    
-    /*for(let i=0;i<src.rows;i++){
+    cv.resize(back,back,new cv.Size(src.cols,src.rows));
+
+    for(let i=0;i<src.rows;i++){
       for(let j=0;j<src.cols;j++){
         if(mask.ucharPtr(i,j)[3]==255){
           dst.ucharPtr(i,j)[0]=back.ucharPtr(i,j)[0];
@@ -272,7 +273,7 @@ async function loadBodyPix() {
           dst.ucharPtr(i,j)[3]=back.ucharPtr(i,j)[3];
         }
       }
-    }*/
+    }
     cv.imshow("myCanvas",dst);
     /*bodyPix.drawMask(
       myCanvas, myConvertVideo, backgroundDarkeningMask, opacity, maskBlurAmount,
@@ -287,8 +288,8 @@ async function loadBodyPix2() {
   canvas2.width = videoElement2.videowidth;
   const options = {
     multiplier: 0.75,
-    stride: 32,
-    quantBytes: 4
+    stride: 16,
+    quantBytes: 2
   }//0.5, 16, 2 -> 어떤 디바이스에서 몇프레임인지
   const net = await bodyPix.load(options);
   let back = cv.imread(imgElement);
@@ -321,26 +322,6 @@ async function loadBodyPix2() {
     let mask2 = cv.matFromArray(src2.rows,src2.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
 
     cv.resize(back,back,new cv.Size(src.cols,src.rows));
-    /*for(let i=0;i<src.rows;i++){
-      for(let j=0;j<src.cols;j++){
-        if(mask.ucharPtr(i,j)[3]==255){
-          dst.ucharPtr(i,j)[0]=back.ucharPtr(i,j)[0];
-          dst.ucharPtr(i,j)[1]=back.ucharPtr(i,j)[1];
-          dst.ucharPtr(i,j)[2]=back.ucharPtr(i,j)[2];
-          dst.ucharPtr(i,j)[3]=back.ucharPtr(i,j)[3];
-        }
-      }
-    }
-    for(let i=0;i<src2.rows;i++){
-      for(let j=0;j<src2.cols;j++){
-        if(mask2.ucharPtr(i,j)[3]==255){
-          dst2.ucharPtr(i,j)[0]=0;
-          dst2.ucharPtr(i,j)[1]=0;
-          dst2.ucharPtr(i,j)[2]=0;
-          dst2.ucharPtr(i,j)[3]=255;
-        }
-      }
-    }*/
     cv.resize(dst2, dst2, new cv.Size(325,450));
     cv.resize(dst,dst,new cv.Size(325,450));
     cv.resize(mask2, mask2, new cv.Size(325,450));
