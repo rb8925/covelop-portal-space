@@ -11,6 +11,7 @@ let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
 
+
 const originMyVideo = document.getElementById('localVideo');
 const videoElement = document.getElementById('myConvertVideo');
 const canvas = document.getElementById('myCanvas');
@@ -239,8 +240,8 @@ async function loadBodyPix() {
   canvas.width = videoElement.videowidth;
   const options = {
     multiplier: 0.75,
-    stride: 32,
-    quantBytes: 4
+    stride: 16,
+    quantBytes: 2
   }
   const net = await bodyPix.load(options);
   let back = cv.imread(imgElement);
@@ -261,7 +262,8 @@ async function loadBodyPix() {
     cap.read(src);
     src.copyTo(dst);
     let mask = cv.matFromArray(src.rows,src.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
-    
+    cv.resize(back,back,new cv.Size(src.cols,src.rows));
+
     for(let i=0;i<src.rows;i++){
       for(let j=0;j<src.cols;j++){
         if(mask.ucharPtr(i,j)[3]==255){
@@ -272,7 +274,6 @@ async function loadBodyPix() {
         }
       }
     }
-
     cv.imshow("myCanvas",dst);
     /*bodyPix.drawMask(
       myCanvas, myConvertVideo, backgroundDarkeningMask, opacity, maskBlurAmount,
@@ -287,9 +288,9 @@ async function loadBodyPix2() {
   canvas2.width = videoElement2.videowidth;
   const options = {
     multiplier: 0.75,
-    stride: 32,
-    quantBytes: 4
-  }
+    stride: 16,
+    quantBytes: 2
+  }//0.5, 16, 2 -> 어떤 디바이스에서 몇프레임인지
   const net = await bodyPix.load(options);
   let back = cv.imread(imgElement);
   
@@ -311,20 +312,49 @@ async function loadBodyPix2() {
     cap.read(src);
     src.copyTo(dst);
     let mask = cv.matFromArray(src.rows,src.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
-    cv.resize(back,back,new cv.Size(src.rows,src.cols),0,0,cv.INTER_LINEAR);
+
+    const segmentation2 = await net.segmentPerson(myConvertVideo);
+    let cap2 = new cv.VideoCapture('myConvertVideo');
+    let src2 = new cv.Mat(videoElement.height, videoElement.width,cv.CV_8UC4);
+    let dst2 = new cv.Mat(videoElement.height, videoElement.width,cv.CV_8UC4);
+    cap2.read(src2);
+    src2.copyTo(dst2);
+    let mask2 = cv.matFromArray(src2.rows,src2.cols,cv.CV_8UC4,backgroundDarkeningMask.data);
+
+    cv.resize(back,back,new cv.Size(src.cols,src.rows));
+    cv.resize(dst2, dst2, new cv.Size(325,450));
+    cv.resize(dst,dst,new cv.Size(325,450));
+    cv.resize(mask2, mask2, new cv.Size(325,450));
+    cv.resize(mask,mask,new cv.Size(325,450));
+    let hab = new cv.Mat(src.rows, src.cols,cv.CV_8UC4);
+    console.log("dst : "+dst.rows+dst.cols+"\ndst2 : "+dst2.rows+dst2.cols+"d\nmask : "+mask.rows+mask.cols+"\nmask2 : "+mask2.rows+mask2.cols+
+    "\nsrc : "+src.rows+src.cols);
     for(let i=0;i<src.rows;i++){
       for(let j=0;j<src.cols;j++){
-        if(mask.ucharPtr(i,j)[3]==255){
-          dst.ucharPtr(i,j)[0]=back.ucharPtr(i,j)[0];
-          dst.ucharPtr(i,j)[1]=back.ucharPtr(i,j)[1];
-          dst.ucharPtr(i,j)[2]=back.ucharPtr(i,j)[2];
-          dst.ucharPtr(i,j)[3]=back.ucharPtr(i,j)[3];
+        if(mask.ucharPtr(i,j)[3]==255||mask2.ucharPtr(i,j)[3]==255){
+          hab.ucharPtr(i,j)[0]=back.ucharPtr(i,j)[0];
+          hab.ucharPtr(i,j)[1]=back.ucharPtr(i,j)[1];
+          hab.ucharPtr(i,j)[2]=back.ucharPtr(i,j)[2];
+          hab.ucharPtr(i,j)[3]=back.ucharPtr(i,j)[3];
+        }
+        else{
+          if(j>src.cols/2){
+            hab.ucharPtr(i,j)[0]=dst2.ucharPtr(i,j-src.cols/2)[0];
+            hab.ucharPtr(i,j)[1]=dst2.ucharPtr(i,j-src.cols/2)[1];
+            hab.ucharPtr(i,j)[2]=dst2.ucharPtr(i,j-src.cols/2)[2];
+            hab.ucharPtr(i,j)[3]=dst2.ucharPtr(i,j-src.cols/2)[3];
+          }
+          else{
+            hab.ucharPtr(i,j)[0]=dst.ucharPtr(i,j)[0];
+            hab.ucharPtr(i,j)[1]=dst.ucharPtr(i,j)[1];
+            hab.ucharPtr(i,j)[2]=dst.ucharPtr(i,j)[2];
+            hab.ucharPtr(i,j)[3]=dst.ucharPtr(i,j)[3];
+          }
         }
       }
     }
-
-    cv.imshow("myCanvas2",dst);
-    /*bodyPix.drawMask(
+    cv.imshow("myCanvas2",hab);
+/*    bodyPix.drawMask(
       myCanvas2, myConvertVideo2, backgroundDarkeningMask, opacity, maskBlurAmount,
       flipHorizontal
     );*/
